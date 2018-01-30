@@ -2,10 +2,13 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import {Calculator} from "./components/Calculator";
+import App from "./App";
+import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
-	<Calculator/>,
+	<BrowserRouter>
+		<App/>
+	</BrowserRouter>,
 	document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
