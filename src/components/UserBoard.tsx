@@ -19,12 +19,14 @@ export class UserBoard extends React.Component<{}, State> {
 	render() {
 		return (
 			<table>
-				<th>#</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-				<th>Gender</th>
-				<th>IpAddress</th>
+				<thead>
+					<th>#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Gender</th>
+					<th>IpAddress</th>
+				</thead>
 				{this.state.users.map(user =>
 					<tr key={user.id}>
 						<td>{user.id}</td>
