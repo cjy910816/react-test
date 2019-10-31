@@ -1,0 +1,86 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Radish API
+
+# Data Structures 
+
+# GiftboxStory
++ id (number)
++ giftboxId (number)
++ storyId (number)
++ numberOfCoupons (number)
++ validityPeriod (number) - 쿠폰을 다운로드 받은 시점부터의 쿠폰의 유효기간 (일단위)
++ deletedAt (string)
++ isDownloaded (boolean)
+
+# GiftboxHistory
++ id (number)
++ giftboxId (number)
++ storyId (number)
++ userId (number)
++ storyCouponGiftId (number) - 실제로 내가 받은 쿠폰 번들에 대한 id
+
+# Group Giftbox
+API related to Giftbox.
+
+## Giftbox [/me/v1/giftbox]
+
+### List Giftbox [GET]
++ Parameters
+    + page (number) - page of items
+    + limit (number) - number of items per page
+
++ Response 200 (application/json)
+    + Attributes
+        + items (array[GiftboxStory])
+        + sumOfCoupons (number)
+        + hasMore (boolean)
+
+## GiftboxStory [/me/v1/giftbox-story/{giftboxStoryId}]
+
+### Download GiftboxStoryCoupon [POST]
++ Parameters
+    + giftboxStoryId: `1` (number) 
+
++ Response 201 (application/json)
+성공적으로 다운 받은 경우
+    + Attributes
+        + success: true (boolean)
+        + data (GiftboxHistory)
+
++ Response 201 (application/json)
+이미 다운로드 한 쿠폰인 경우
+    + Attributes
+        + success: false (boolean)
+        + errorCode: ALREADY_DOWNLOADED_STORY (string)
+        + errorMessage (string)
+
++ Response 201 (application/json)
+Giftbox가 유효하지 않은 경우
+    + Attributes
+        + success: false (boolean)
+        + errorCode: NOT_VALID_GIFTBOX_STORY (string)
+        + errorMessage (string)
+        
++ Response 400 (application/json)
+URI 의 giftboxStoryId가 존재하지 않는 경우
+
+## StoryGiftbox [/coupon/v1/stories/{storyId}/giftbox-story]
+
+### Check story is in the giftbox [GET]
++ Parameters
+    + storyId: 7808 (number)
+
++ Response 200 (application/json)
+    + Attributes (GiftboxStory)
+
+
+# Group Episode
+API related to Episodes.
+
+## Episode [/story/v2/stories/{question_id}/episodes]
+    
+### List Episodes [GET]
++ Parameters
+    + story_id (number) - ID of story
